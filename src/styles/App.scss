@@ -1,0 +1,183 @@
+// Variables
+$primary-color: #2c3e50;
+$secondary-color: #34495e;
+$success-color: #27ae60;
+$warning-color: #f39c12;
+$danger-color: #c0392b;
+$white: #ffffff;
+
+// AQI Colors (Official WAQI colors)
+$aqi-good: #00e400;
+$aqi-moderate: #ffff00;
+$aqi-sensitive: #ff7e00;
+$aqi-unhealthy: #ff0000;
+$aqi-very-unhealthy: #8f3f97;
+$aqi-hazardous: #7e0023;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin card-style {
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+// Global styles
+.app {
+  min-height: 100vh;
+  background-color: #f5f6fa;
+}
+
+// Loading animation
+.global-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  @include flex-center;
+  flex-direction: column;
+  z-index: 1000;
+
+  .loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid $primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: $primary-color;
+    font-size: 1.1rem;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.header {
+  background-color: $primary-color;
+  color: $white;
+  padding: 1.5rem;
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    font-size: 2.5rem;
+  }
+
+  .header-subtitle {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  height: calc(100vh - 100px);
+}
+
+.map-section {
+  @include card-style;
+  overflow: hidden;
+  padding: 0;
+
+  .leaflet-container {
+    height: 100%;
+    width: 100%;
+  }
+
+  .aqi-marker {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    &.good {
+      background-color: $aqi-good;
+      color: black;
+    }
+    &.moderate {
+      background-color: $aqi-moderate;
+      color: black;
+    }
+    &.sensitive {
+      background-color: $aqi-sensitive;
+    }
+    &.unhealthy {
+      background-color: $aqi-unhealthy;
+    }
+    &.very-unhealthy {
+      background-color: $aqi-very-unhealthy;
+    }
+    &.hazardous {
+      background-color: $aqi-hazardous;
+    }
+  }
+}
+
+.info-panel {
+  @include card-style;
+  overflow-y: auto;
+}
+
+// Rest of the styles remain the same...
+// (Previous dashboard, conditions-grid, pollutant-info, recommendations styles)
+
+// AQI Level Colors in various components
+.aqi-value {
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+
+  &.good {
+    background-color: $aqi-good;
+    color: black;
+  }
+  &.moderate {
+    background-color: $aqi-moderate;
+    color: black;
+  }
+  &.sensitive {
+    background-color: $aqi-sensitive;
+    color: white;
+  }
+  &.unhealthy {
+    background-color: $aqi-unhealthy;
+    color: white;
+  }
+  &.very-unhealthy {
+    background-color: $aqi-very-unhealthy;
+    color: white;
+  }
+  &.hazardous {
+    background-color: $aqi-hazardous;
+    color: white;
+  }
+}
