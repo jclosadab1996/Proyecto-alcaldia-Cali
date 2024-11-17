@@ -1,14 +1,48 @@
 import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import type { AirQualityData } from '../types';
 import 'leaflet/dist/leaflet.css';
 
-interface AirQualityMapProps {
-  data: AirQualityData[];
-  selectedStation: AirQualityData | null;
-  onSelectStation: (station: AirQualityData | null) => void;
-}
+// Node coordinates
+const nodeLocations = {
+  N1: [3.3205, -76.5393], // Ecoparque Corazón de Pance
+  N2: [3.4516, -76.5320], // Ecoparque Las Garzas
+  N3: [3.3462, -76.5444], // Universidad San Buenaventura
+  N4: [3.3419, -76.5300], // Universidad ICESI
+  N5: [3.3539, -76.5229], // Universidad Autónoma de Occidente
+  N6: [3.3570, -76.5399], // Universidad Javeriana
+  N7: [3.4703, -76.5320], // Fundación Universitaria San Martin
+  N8: [3.4331, -76.5407], // Universidad Libre
+  N10: [3.3723, -76.5390], // Colegio Nuevo Cambridge
+  N11: [3.3547, -76.5379], // Club Campestre Cali
+  N12: [3.3801, -76.5443], // Universidad Católica Meléndez
+  N13: [3.3749, -76.5392], // Holguines Trade Center
+  N14: [3.4703, -76.5320], // Universidad Santiago de Cali
+  N15: [3.3205, -76.5393], // Zonamérica
+  N16: [3.3723, -76.5390], // Fundación Valle del Lili
+  N17: [3.4516, -76.5320], // Colegio Nuestra Señora del Rosario
+  N18: [3.3462, -76.5444]  // Condominio Bagatelle
+};
+
+const nodeInstitutions = {
+  N1: 'Ecoparque Corazón de Pance',
+  N2: 'Ecoparque Las Garzas',
+  N3: 'Universidad San Buenaventura',
+  N4: 'Universidad ICESI',
+  N5: 'Universidad Autónoma de Occidente',
+  N6: 'Universidad Javeriana',
+  N7: 'Fundación Universitaria San Martin',
+  N8: 'Universidad Libre',
+  N10: 'Colegio Nuevo Cambridge',
+  N11: 'Club Campestre Cali',
+  N12: 'Universidad Católica Meléndez',
+  N13: 'Holguines Trade Center',
+  N14: 'Universidad Santiago de Cali',
+  N15: 'Zonamérica',
+  N16: 'Fundación Valle del Lili',
+  N17: 'Colegio Nuestra Señora del Rosario',
+  N18: 'Condominio Bagatelle'
+};
 
 // Fix for default marker icons
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -18,45 +52,30 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-const getMarkerColor = (aqi: number): string => {
-  if (aqi <= 50) return '#10B981';
-  if (aqi <= 100) return '#F59E0B';
-  if (aqi <= 150) return '#F97316';
-  if (aqi <= 200) return '#EF4444';
-  return '#8B5CF6';
-};
-
-function WaqiLayer() {
-  const map = useMap();
-
-  useEffect(() => {
-    const waqiLayer = L.tileLayer(
-      'https://tiles.waqi.info/tiles/usepa-aqi/{z}/{x}/{y}.png?token=' + import.meta.env.VITE_WAQI_API_TOKEN,
-      {
-        attribution: 'Air Quality Tiles &copy; WAQI.info',
-        opacity: 0.6,
-      }
-    );
-
-    waqiLayer.addTo(map);
-
-    return () => {
-      map.removeLayer(waqiLayer);
-    };
-  }, [map]);
-
-  return null;
+interface MapProps {
+  selectedNode?: string;
+  onNodeSelect?: (nodeId: string) => void;
 }
 
-export const AirQualityMap: React.FC<AirQualityMapProps> = ({
-  data,
-  selectedStation,
-  onSelectStation,
-}) => {
-  const createCustomIcon = (aqi: number) => {
+export const AirQualityMap: React.FC<MapProps> = ({ selectedNode, onNodeSelect }) => {
+  const createCustomIcon = (nodeId: string) => {
+    const isSelected = selectedNode === nodeId;
     return L.divIcon({
       className: 'custom-marker',
-      html: `<div style="background-color: ${getMarkerColor(aqi)}; width: 24px; height: 24px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></div>`,
+      html: `<div style="
+        background-color: ${isSelected ? '#3B82F6' : '#10B981'};
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+      ">${nodeId.replace('N', '')}</div>`,
       iconSize: [24, 24],
     });
   };
@@ -64,7 +83,7 @@ export const AirQualityMap: React.FC<AirQualityMapProps> = ({
   return (
     <MapContainer
       center={[3.4516, -76.5320]}
-      zoom={11}
+      zoom={12}
       style={{ width: '100%', height: '100%', minHeight: '600px' }}
       className="rounded-xl overflow-hidden"
     >
@@ -72,24 +91,20 @@ export const AirQualityMap: React.FC<AirQualityMapProps> = ({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <WaqiLayer />
       
-      {data.map((station) => (
+      {Object.entries(nodeLocations).map(([nodeId, coordinates]) => (
         <Marker
-          key={`${station.city.geo[0]}-${station.city.geo[1]}`}
-          position={[station.city.geo[0], station.city.geo[1]]}
-          icon={createCustomIcon(station.aqi)}
+          key={nodeId}
+          position={coordinates as [number, number]}
+          icon={createCustomIcon(nodeId)}
           eventHandlers={{
-            click: () => onSelectStation(station),
+            click: () => onNodeSelect?.(nodeId),
           }}
         >
           <Popup>
             <div className="p-2">
-              <h3 className="font-bold">{station.city.name}</h3>
-              <p className="mt-1">AQI: <span className="font-semibold">{station.aqi}</span></p>
-              <p className="text-sm text-gray-600">
-                Última actualización: {new Date(station.time.iso).toLocaleString()}
-              </p>
+              <h3 className="font-bold">{nodeId}</h3>
+              <p className="text-sm">{nodeInstitutions[nodeId]}</p>
             </div>
           </Popup>
         </Marker>

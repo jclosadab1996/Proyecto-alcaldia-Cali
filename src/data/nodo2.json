@@ -1,0 +1,136 @@
+{
+  "node 2": [
+    {
+      "timestamp": "2024-01",
+      "radiacionSolar": 15.333333333333334,
+      "indiceUV": 0.06666666666666667,
+      "temperatura": 20.48,
+      "humedad": 89.66666666666667,
+      "pm2.5": 8.966666666666667,
+      "pm10": 9,
+      "velocidadViento": 0.3333333333333333,
+      "ruido": 52.36666666666667,
+      "node": "N2"
+    },
+    {
+      "timestamp": "2024-02",
+      "radiacionSolar": 17.333333333333332,
+      "indiceUV": 0.13333333333333333,
+      "temperatura": 20.94666666666667,
+      "humedad": 86.5,
+      "pm2.5": 15.033333333333333,
+      "pm10": 15.033333333333333,
+      "velocidadViento": 0,
+      "ruido": 47.8,
+      "node": "N2"
+    },
+    {
+      "timestamp": "2024-03",
+      "radiacionSolar": 0,
+      "indiceUV": 0,
+      "temperatura": 0,
+      "humedad": 0,
+      "pm2.5": 0,
+      "pm10": 0,
+      "velocidadViento": 0,
+      "ruido": 0,
+      "node": "N2"
+    },
+    {
+      "timestamp": "2024-04",
+      "radiacionSolar": 28.5,
+      "indiceUV": 0.19999999999999998,
+      "temperatura": 20.403333333333332,
+      "humedad": 95.41666666666667,
+      "pm2.5": 11.216666666666667,
+      "pm10": 11.383333333333333,
+      "velocidadViento": 0.6666666666666666,
+      "ruido": 55.13333333333333,
+      "node": "N2"
+    },
+    {
+      "timestamp": "2024-05",
+      "radiacionSolar": 37.57142857142857,
+      "indiceUV": 0.21428571428571427,
+      "temperatura": 20.735714285714288,
+      "humedad": 93.2,
+      "pm2.5": 6.685714285714285,
+      "pm10": 6.814285714285714,
+      "velocidadViento": 0,
+      "ruido": 50.92857142857143,
+      "node": "N2"
+    },
+    {
+      "timestamp": "2024-06",
+      "radiacionSolar": 30,
+      "indiceUV": 0.175,
+      "temperatura": 20.6725,
+      "humedad": 93.975,
+      "pm2.5": 10.15,
+      "pm10": 10.225,
+      "velocidadViento": 0,
+      "ruido": 47.975,
+      "node": "N2"
+    },
+    {
+      "timestamp": "2024-07",
+      "radiacionSolar": 25.5,
+      "indiceUV": 0.2,
+      "temperatura": 19.619999999999997,
+      "humedad": 87.2,
+      "pm2.5": 6.6,
+      "pm10": 6.7,
+      "velocidadViento": 1,
+      "ruido": 45.6,
+      "node": "N2"
+    },
+    {
+      "timestamp": "2024-08",
+      "radiacionSolar": 50.857142857142854,
+      "indiceUV": 0.2285714285714286,
+      "temperatura": 19.49857142857143,
+      "humedad": 84.95714285714287,
+      "pm2.5": 10.457142857142857,
+      "pm10": 10.514285714285714,
+      "velocidadViento": 0.7142857142857143,
+      "ruido": 51.58571428571428,
+      "node": "N2"
+    },
+    {
+      "timestamp": "2024-09",
+      "radiacionSolar": 51,
+      "indiceUV": 0.24285714285714288,
+      "temperatura": 20.52857142857143,
+      "humedad": 86.28571428571426,
+      "pm2.5": 12.914285714285713,
+      "pm10": 13.142857142857142,
+      "velocidadViento": 0.42857142857142855,
+      "ruido": 52.142857142857146,
+      "node": "N2"
+    },
+    {
+      "timestamp": "2024-10",
+      "radiacionSolar": 116,
+      "indiceUV": 0.4,
+      "temperatura": 20.46,
+      "humedad": 83.6,
+      "pm2.5": 12.1,
+      "pm10": 12.1,
+      "velocidadViento": 0,
+      "ruido": 55.2,
+      "node": "N2"
+    },
+    {
+      "timestamp": "2024-11",
+      "radiacionSolar": 20,
+      "indiceUV": 0.2,
+      "temperatura": 20.05,
+      "humedad": 95.6,
+      "pm2.5": 10,
+      "pm10": 10,
+      "velocidadViento": 1,
+      "ruido": 42.7,
+      "node": "N2"
+    }
+  ]
+}
