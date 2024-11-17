@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gradient-to-br from-blue-50 via-white to-blue-50 min-h-screen;
+  @apply bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 min-h-screen;
 }
 
 .leaflet-container {
@@ -42,4 +42,24 @@ body {
 
 .notification-hazardous {
   @apply bg-red-900;
+}
+
+.ica-table {
+  @apply w-full mb-6 rounded-lg overflow-hidden border border-gray-200;
+}
+
+.ica-table th {
+  @apply px-4 py-2 bg-gray-100 text-sm font-semibold text-gray-700;
+}
+
+.ica-table td {
+  @apply px-4 py-2 text-sm border-t border-gray-200;
+}
+
+.ica-color-indicator {
+  @apply w-full h-6 rounded;
+}
+
+.recommendation-alert {
+  @apply p-4 rounded-lg mb-4 border-l-4;
 }

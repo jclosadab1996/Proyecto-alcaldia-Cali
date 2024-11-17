@@ -42,14 +42,59 @@ const nodeInstitutions = {
   N18: "Condominio Bagatelle",
 };
 
+const ICALevels = [
+  {
+    range: "0-50",
+    color: "bg-green-500",
+    category: "Buena",
+    pm10: "0-54",
+    pm25: "0-12",
+  },
+  {
+    range: "51-100",
+    color: "bg-yellow-500",
+    category: "Moderada",
+    pm10: "55-154",
+    pm25: "13-37",
+  },
+  {
+    range: "101-150",
+    color: "bg-orange-500",
+    category: "Dañina a grupos sensibles",
+    pm10: "155-254",
+    pm25: "38-55",
+  },
+  {
+    range: "151-200",
+    color: "bg-red-500",
+    category: "Dañina",
+    pm10: "255-354",
+    pm25: "56-150",
+  },
+  {
+    range: "201-300",
+    color: "bg-purple-500",
+    category: "Muy dañina",
+    pm10: "355-424",
+    pm25: "151-250",
+  },
+  {
+    range: "301-500",
+    color: "bg-red-900",
+    category: "Peligrosa",
+    pm10: "425-604",
+    pm25: "251-500",
+  },
+];
+
 const getAirQualityCategory = (pm25: number, pm10: number) => {
-  // PM2.5 ranges
   if (pm25 <= 12)
     return {
       category: "Buena",
       color: "bg-green-500",
       textColor: "text-green-500",
       badge: "notification-good",
+      alertBorder: "border-green-500",
     };
   if (pm25 <= 37)
     return {
@@ -57,6 +102,7 @@ const getAirQualityCategory = (pm25: number, pm10: number) => {
       color: "bg-yellow-500",
       textColor: "text-yellow-500",
       badge: "notification-moderate",
+      alertBorder: "border-yellow-500",
     };
   if (pm25 <= 55)
     return {
@@ -64,6 +110,7 @@ const getAirQualityCategory = (pm25: number, pm10: number) => {
       color: "bg-orange-500",
       textColor: "text-orange-500",
       badge: "notification-sensitive",
+      alertBorder: "border-orange-500",
     };
   if (pm25 <= 150)
     return {
@@ -71,6 +118,7 @@ const getAirQualityCategory = (pm25: number, pm10: number) => {
       color: "bg-red-500",
       textColor: "text-red-500",
       badge: "notification-unhealthy",
+      alertBorder: "border-red-500",
     };
   if (pm25 <= 250)
     return {
@@ -78,12 +126,14 @@ const getAirQualityCategory = (pm25: number, pm10: number) => {
       color: "bg-purple-500",
       textColor: "text-purple-500",
       badge: "notification-very-unhealthy",
+      alertBorder: "border-purple-500",
     };
   return {
     category: "Peligrosa",
     color: "bg-red-900",
     textColor: "text-red-900",
     badge: "notification-hazardous",
+    alertBorder: "border-red-900",
   };
 };
 
@@ -134,6 +184,8 @@ export const AirQualityCard: React.FC<AirQualityCardProps> = ({ nodeId }) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6">
+      {/* ICA Table */}
+
       <div className="flex justify-between items-center mb-6">
         <div>
           <h2 className="text-xl font-bold">{nodeId}</h2>
@@ -162,14 +214,14 @@ export const AirQualityCard: React.FC<AirQualityCardProps> = ({ nodeId }) => {
         </div>
       </div>
 
-      <div className="bg-gray-50 rounded-xl p-4 mb-6">
+      <div
+        className={`recommendation-alert ${airQualityStatus.alertBorder} bg-opacity-10 ${airQualityStatus.textColor}`}
+      >
         <h3 className="font-semibold mb-2">Recomendación:</h3>
-        <p className="text-gray-700">
-          {getRecommendation(airQualityStatus.category)}
-        </p>
+        <p>{getRecommendation(airQualityStatus.category)}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 mt-6">
         <div className="bg-blue-50 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-2">
             <Wind className="w-5 h-5 text-blue-500" />
@@ -244,6 +296,36 @@ export const AirQualityCard: React.FC<AirQualityCardProps> = ({ nodeId }) => {
             </span>
           </div>
         </div>
+      </div>
+
+      <div className="mb-8 p-4">
+        <h3 className="text-lg font-semibold mb-4">
+          Índice de Calidad del Aire (ICA)
+        </h3>
+        <table className="ica-table">
+          <thead>
+            <tr>
+              <th>ICA</th>
+              <th>Color</th>
+              <th>Categoría</th>
+              <th>PM10 µg/m³</th>
+              <th>PM2.5 µg/m³</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ICALevels.map((level, index) => (
+              <tr key={index}>
+                <td>{level.range}</td>
+                <td>
+                  <div className={`ica-color-indicator ${level.color}`}></div>
+                </td>
+                <td>{level.category}</td>
+                <td>{level.pm10}</td>
+                <td>{level.pm25}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
