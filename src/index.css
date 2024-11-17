@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gray-50;
+  @apply bg-gradient-to-br from-blue-50 via-white to-blue-50 min-h-screen;
 }
 
 .leaflet-container {
@@ -14,4 +14,32 @@ body {
 .custom-marker {
   background: transparent;
   border: none;
+}
+
+.notification-badge {
+  @apply absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center rounded-full text-xs font-bold text-white;
+}
+
+.notification-good {
+  @apply bg-green-500;
+}
+
+.notification-moderate {
+  @apply bg-yellow-500;
+}
+
+.notification-sensitive {
+  @apply bg-orange-500;
+}
+
+.notification-unhealthy {
+  @apply bg-red-500;
+}
+
+.notification-very-unhealthy {
+  @apply bg-purple-500;
+}
+
+.notification-hazardous {
+  @apply bg-red-900;
 }

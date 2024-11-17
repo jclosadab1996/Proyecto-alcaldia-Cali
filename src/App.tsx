@@ -7,10 +7,10 @@ function App() {
   const [selectedNode, setSelectedNode] = useState<string>("N1");
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">
-          Monitor de Calidad del Aire Comuna 22 - Cali
+        <h1 className="text-3xl font-bold mb-8 text-gray-800">
+          Monitor de Calidad del Aire - Cali
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
